@@ -14,9 +14,7 @@ import { Feature, Service, Pod } from ".";
 // Define the web feature model
 const GetTrendingPosts = Feature.create({
   name: "GetTrendingPosts",
-  input: Type.Object({
-    url: Type.String(),
-  }),
+  input: Type.Void(),
   output: Type.Object({
     posts: Type.Array(
       Type.Object({
@@ -31,46 +29,49 @@ const GetTrendingPosts = Feature.create({
 const hackernews = Service.create("hackernews.com");
 const medium = Service.create("medium.com");
 
-// Implement the web feature on the services
-hackernews.add(
-  GetTrendingPosts.implement({
-    async handler({ input, output }) {
-      const { url } = input;
-      const response = await fetch(url);
-      const html = await response.text();
+// Create a web feature instance
+const getTrendingPostsOnHackerNews = GetTrendingPosts.implement({
+  async handler({ output }) {
+    const response = await fetch("https://news.ycombinator.com/");
+    const html = await response.text();
 
-      output.posts = html
-        .split("<a href=")
-        .map((link) => {
-          const url = link.split('">')[0];
-          const title = link.split('">')[1].split("</a>")[0];
-          return { title, url };
-        })
-        .filter((post) => post.title && post.url);
-    },
-  })
-);
+    output.posts = html
+      .split("<a href=")
+      .map((link) => {
+        const url = link.split('">')[0];
+        const title = link.split('">')[1].split("</a>")[0];
+        return { title, url };
+      })
+      .filter((post) => post.title && post.url);
+  },
+});
 
-medium.implement(
-  GetTrendingPosts.implement({
-    async handler({ input, output }) {
-      const { url } = input;
-      const response = await fetch(url);
-      const html = await response.text();
-      // Parse the html to get the posts and set the output
-      // output.posts = ...
-    },
-  })
-);
+// Execute the web feature with the service
+const { posts } = await getTrendingPostsOnHackerNews.execute();
+
+// Attach the web feature to a service
+hackernews.add(getTrendingPostsOnHackerNews);
+
+// Create a web feature instance
+const getTrendingPostsOnMedium = GetTrendingPosts.implement({
+  async handler({ output }) {
+    const response = await fetch("https://medium.com/");
+    const html = await response.text();
+    // Parse the html to get the posts and set the output
+    // output.posts = ...
+  },
+});
+
+// Execute the web feature with the service
+const { posts } = await getTrendingPostsOnMedium.execute();
+
+// Attach the web feature to a service
+medium.add(getTrendingPostsOnMedium);
 
 // Executing the web feature on the services
-const { posts } = await hackernews.execute("GetTrendingPosts", {
-  url: "https://news.ycombinator.com/",
-});
+const { posts } = await hackernews.execute({ name: "GetTrendingPosts" });
 
-const { posts } = await medium.execute("GetTrendingPosts", {
-  url: "https://medium.com/",
-});
+const { posts } = await medium.execute({ name: "GetTrendingPosts" });
 
 // Alternatively
 
@@ -78,12 +79,14 @@ const pod = Pod.create();
 pod.addService(hackernews);
 pod.addService(medium);
 
-const { posts } = await pod.execute("hackernews.com", "GetTrendingPosts", {
-  url: "https://news.ycombinator.com/",
+const { posts } = await pod.execute({
+  host: "hackernews.com",
+  name: "GetTrendingPosts",
 });
 
-const { posts } = await pod.execute("medium.com", "GetTrendingPosts", {
-  url: "https://medium.com/",
+const { posts } = await pod.execute({
+  host: "medium.com",
+  name: "GetTrendingPosts",
 });
 ```
 
@@ -117,15 +120,15 @@ Abstraction already happens in every project we build. By creating a common abst
 
 `Web features` are bound to `web services`.
 
-## `web service`
+## `service`
 
-A web service can be a website, an API, a web app or anything accessible on the web and is referenced as a [host](#host).
+A (web) service can be a website, an API, a web app or anything accessible on the web and is referenced as a [host](#host).
 
 Ex: `github.com`, `tiktok.com`, `somebody.myshopify.com`.
 
-## `web feature`
+## `feature`
 
-A web feature is a generic way to describe how to perform an action on a web service.
+A (web) feature is a generic way to describe how to perform an action on a web service.
 
 It is composed of a [`model`](#model) that describes the context to run an action and an [`instance`](#instance) that implements the model specification for a specific web service.
 
