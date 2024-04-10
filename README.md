@@ -7,7 +7,7 @@ graph LR;
     a["Feature Contract"]-->b["Feature Adapter"]-->c["Service"];
 ```
 
->From a contract, we create many adapters that are used to interact with many web services using an identical input and expecting the same output shape.
+> From a contract, we create many adapters that are used to interact with many web services using an identical input and expecting the same output shape.
 
 **Example**
 
@@ -91,11 +91,11 @@ A host is a unique identifier that represents a web service. It should represent
 
 Examples:
 
-| Url                            | Host                   |
-| ------------------------------ | ---------------------- |
-| https://www.github.com         | github.com             |
-| https://www.tiktok.com/@france | tiktok.com             |
-| https://somebody.myshopify.com | somebody.myshopify.com |
+| Url                            |     | Host                   |
+| ------------------------------ | --- | ---------------------- |
+| https://www.github.com         | --> | github.com             |
+| https://www.tiktok.com/@france | --> | tiktok.com             |
+| https://somebody.myshopify.com | --> | somebody.myshopify.com |
 
 ### Schema properties
 
