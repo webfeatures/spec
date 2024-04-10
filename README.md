@@ -7,7 +7,7 @@ graph LR;
     a["Feature Contract"]-->b["Feature Adapter"]-->c["Service"];
 ```
 
-    From a contract, we create many adapters that are used to interact with many web services using an identical input and expecting the same output shape.
+>From a contract, we create many adapters that are used to interact with many web services using an identical input and expecting the same output shape.
 
 **Example**
 
