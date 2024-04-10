@@ -1,26 +1,13 @@
-# web features
+# Web features
 
-Exposing the web as generic features
-
-# Concept
+Abstracting the web through generic features
 
 ```mermaid
 graph LR;
-    a["Feature Contract"]-->b["Feature Adapter"]-->c["Web Service"];
-
+    a["Feature Contract"]-->b["Feature Adapter"]-->c["Service"];
 ```
 
-1. **Feature Contract**:
-
-Defines the `input schema`, `output schema`, `context schema` and `test` for a given feature. [Read more](#feature-contract)
-
-2. **Feature Adapter**:
-
-Implements the contract for a service (by setting a **method** that takes an `input`+`context` and produces an `output`). [Read more](#feature-adapter)
-
-3. **Service**:
-
-A web service, defined by a `host` that can be interacted with using the feature adapter. [Read more](#service)
+    From a contract, we create many adapters that are used to interact with many web services using an identical input and expecting the same output shape.
 
 **Example**
 
@@ -43,30 +30,6 @@ graph LR;
     contract2-->|Feature Adapter| service1;
     contract2-->|Feature Adapter| service3;
 ```
-
-# Genesis
-
-The web exists to help the world openely share data and inter-connect. The only thing is that we don't all share how that should be happening and rightfully so.
-
-We propose a minimalistic approach to abstract these into defined web features that can be used to connect to any web service in a generic way.
-
-# Why
-
-1. **Simplicity**
-
-As a developer, web services can be hard to interact with. Leveraging the abstraction of the web features can help to simplify the way we interact with web services.
-
-2. **Consistency**
-
-Providing generic web features models can help to standardize the way we interact with web services. This can help to create a consistent way to interact with web services. While this will be opinionated, it will help to create a common ground for developers to interact with web services.
-
-3. **Flexibility**
-
-Steps to interact with a feature on web service can be complex and hard to describe accross languages or projects. By abstracting these into web features, we can handle the complexity as code in a more flexible way without restriction, only caring to get the correct output for a given input.
-
-4. **Reusability**
-
-Abstraction already happens in every project we build. By creating a common abstraction for web services, we may hope to build and maintain a community based set of web features that can be reused across projects.
 
 # Definitions
 
@@ -95,6 +58,30 @@ Abstraction already happens in every project we build. By creating a common abst
 | -------------------------------- | ------------------------- | -------------------------------------- |
 | **host**                         | valid host name           | a unique host representing the service |
 | [**adapters**](#feature-adapter) | kv<name, feature adapter> | adapters bound to this service         |
+
+# Genesis
+
+The web exists to help the world openely share data and inter-connect. The only thing is that we don't all share how that should be happening and rightfully so.
+
+We propose a minimalistic approach to abstract these into defined web features that can be used to connect to any web service in a generic way.
+
+# Why
+
+1. **Simplicity**
+
+As a developer, web services can be hard to interact with. Leveraging the abstraction of the web features can help to simplify the way we interact with web services.
+
+2. **Consistency**
+
+Providing generic web features models can help to standardize the way we interact with web services. This can help to create a consistent way to interact with web services. While this will be opinionated, it will help to create a common ground for developers to interact with web services.
+
+3. **Flexibility**
+
+Steps to interact with a feature on web service can be complex and hard to describe accross languages or projects. By abstracting these into web features, we can handle the complexity as code in a more flexible way without restriction, only caring to get the correct output for a given input.
+
+4. **Reusability**
+
+Abstraction already happens in every project we build. By creating a common abstraction for web services, we may hope to build and maintain a community based set of web features that can be reused across projects.
 
 ## Development Guidelines
 
