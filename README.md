@@ -58,6 +58,12 @@ graph LR;
 | **host**                         | valid host name           | a unique host representing the service |
 | [**adapters**](#feature-adapter) | kv<name, feature adapter> | adapters bound to this service         |
 
+## Service Group
+
+| Property                 | Format            | Description      |
+| ------------------------ | ----------------- | ---------------- |
+| [**services**](#service) | kv<name, service> | grouped services |
+
 # Genesis
 
 The web exists to help the world openely share data and inter-connect. The only thing is that we don't all share how that should be happening and rightfully so.
