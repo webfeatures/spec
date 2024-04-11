@@ -47,7 +47,6 @@ graph LR;
 
 | Property                  | Format                                | Description                                                |
 | ------------------------- | ------------------------------------- | ---------------------------------------------------------- |
-| [**host**](#host)         | valid host name                       | a unique host representing the service                     |
 | [**contract**](#contract) | feature contract                      | ref to existing contract                                   |
 | **handler**               | async ({ input, output, ctx}) => void | async method that builds the output given an input and ctx |
 | **samples**               |                                       | list of input samples to run tests against                 |
