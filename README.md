@@ -13,9 +13,9 @@ graph LR;
 
 ```mermaid
 graph LR;
-    contract1["name: GetTrendingArticles
+    contract1["name: get_trending_articles
     (Feature Contract)"];
-    contract2["name: GetBestAuthors
+    contract2["name: get_best_authors
     (Feature Contract)"];
 
     service1["host: medium.com
@@ -35,13 +35,13 @@ graph LR;
 
 ## Feature Contract
 
-| Property   | Format                       | Description               | Example                          |
-| ---------- | ---------------------------- | ------------------------- | -------------------------------- |
-| **name**   | pascal-cased name            | a unique descriptive name | `GetLastPosts`                   |
-| **input**  | json schema compatible model | input schema              | `{ size: 10 }`                   |
-| **output** | json schema compatible model | output schema             | `{ posts: post[] }`              |
-| **ctx**    | json schema compatible model | additional context schema | `{ fetch:(Request) => Response}` |
-| **test**   | async function               | test method               | -                                |
+| Property   | Format                          | Description               | Example                          |
+| ---------- | ------------------------------- | ------------------------- | -------------------------------- |
+| **name**   | pascal-cased name               | a unique descriptive name | `get_last_posts`                 |
+| **input**  | json schema compatible model    | input schema              | `{ size: 10 }`                   |
+| **output** | json schema compatible model    | output schema             | `{ posts: post[] }`              |
+| **ctx**    | json schema compatible model    | additional context schema | `{ fetch:(Request) => Response}` |
+| **test**   | async ({ samples, ctx}) => void | test method               | -                                |
 
 ## Feature Adapter
 
@@ -102,12 +102,7 @@ Examples:
 | https://www.tiktok.com/@france | --> | tiktok.com             |
 | https://somebody.myshopify.com | --> | somebody.myshopify.com |
 
-### Schema properties
+### Schema & Name properties
 
 All schema properties should follow the `snake_case` formatting rule (lowercase with underscores).
 This is to ensure that the schema properties are consistent and easy to read accross services/languages.
-
-### Naming Features
-
-Feature contracts should be named in `PascalCase` (capitalized with no spaces).
-This is to simplify typing and accessing the feature contract in code (for any language).
